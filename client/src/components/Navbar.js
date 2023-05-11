@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
+// import SavedBooks from '../pages/SavedBooks';
+// import SearchBooks from '../pages/SearchBooks';
 
 import Auth from '../utils/auth';
 
