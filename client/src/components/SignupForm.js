@@ -17,7 +17,8 @@ const SignupForm = () => {
   const [addUser, { error }] = useMutation(ADD_USER);
 
   useEffect(() => {
-    if (error) {
+    if (error) { 
+      console.log(error)
       setShowAlert(true);
     } else {
       setShowAlert(false);
@@ -32,14 +33,13 @@ const SignupForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    console.log(userFormData)
 
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
     }
-
     try {
       const { data } = await addUser({
         variables: { ...userFormData },
