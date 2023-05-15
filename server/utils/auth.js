@@ -1,3 +1,4 @@
+//auth.js: Update the auth middleware function to work with the GraphQL API.
 const jwt = require('jsonwebtoken');
 
 // set token secret and expiration date
@@ -5,21 +6,14 @@ const secret = 'mysecretsshhhhh';
 const expiration = '2h';
 
 module.exports = {
-
-  signToken: function ({ username, email, _id }) {
-    const payload = { username, email, _id };
-
-    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
-  },
   // function for our authenticated routes
-  authMiddleware: function ({req}) {
-    // allows token to be sent via  req.query or headers
-    let token = req.query.token || req.headers.authorization || req.body.token;
+  authMiddleware: function ({ req }) {
+    // allows token to be sent via  req.body, req.query or headers
+    let token = req.body.token || req.query.token || req.headers.authorization;
 
-    // ["Bearer", "<tokenvalue>"]
+    // We split the token string into an array and return actual token
     if (req.headers.authorization) {
       token = token.split(' ').pop().trim();
-      console.log('token', token)
     }
 
     if (!token) {
@@ -34,8 +28,12 @@ module.exports = {
       console.log('Invalid token');
     }
 
-    // send to next endpoint
+    // return the request object so it can be passed to the resolver as 'context'
     return req;
   },
+  signToken: function ({ username, email, _id }) {
+    const payload = { username, email, _id };
 
+    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
 };
