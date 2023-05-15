@@ -80,11 +80,11 @@ const SearchBooks = () => {
     }
 
     try {
-      const { data } = await saveBook({
+      await saveBook({
         variables: { bookData: bookToSave },
       });
 
-      console.log("data from handleSave", data);
+      // console.log("data from handleSave", data);
 
       // if (!data.ok) {
       //   throw new Error('something went wrong!');
@@ -127,8 +127,8 @@ const SearchBooks = () => {
 
       <Container>
         <h2 className='pt-5'>
-          {searchedBooks?.length
-            ? `Viewing ${searchedBooks?.length} results:`
+          {searchedBooks.length
+            ? `Viewing ${searchedBooks.length} results:`
             : 'Search for a book to begin'}
         </h2>
         <Row>
